@@ -4,6 +4,7 @@ Created on 2014/9/23
 
 @author: kepler-moment
 '''
+from editDistance import editDistance
 
 class Node:
     """Used as node of Trie"""
@@ -97,7 +98,8 @@ class Trie:
                 root = root.next[tmp]
             if root != None and root.isWord() is True:
                 d[key] = root.getValue()
-        return d        
+        return d
+    
         
 class Dictionary:
     """"""
@@ -106,11 +108,34 @@ class Dictionary:
         param dict_map is a map of all words which likes
         dict_map['english'] = 'chinese' 
         """
-        self.dictionary = Trie(dict_map)
+        self.dict_trie = Trie(dict_map)
+        self.dict_map = dict_map;
     
     def search(self,key):
         """search word in dict"""
-        return self.dictionary.search(key)
+        return self.dict_trie.search(key)
+    
+    
+    def editDistanceTopK(self,key,k,distance):
+        
+        def cmp1(word1,word2):
+            """"sort similarWord by distance"""
+            if word1['distance'] < word2['distance']:
+                return -1
+            return 1
+    
+        assert k >= 1
+        assert distance >= 0
+        similarWord = []
+        for (kt,va) in self.dict_map.items():
+            d = editDistance(key,kt)
+            if d <= distance:
+                similarWord.append({})
+                similarWord[len(similarWord) - 1] = {kt:va,"distance":d};
+        similarWord.sort(cmp1)
+        return similarWord[0:k]
+        
+
     
 def getDictMap(path):
     fp = open(path,"r")
@@ -126,5 +151,6 @@ if __name__=='__main__':
     #print timeit.timeit("search('Will')", "from __main__ import search", timeit.default_timer, 1)
     #print timeit.timeit("binary_search('Will')", "from __main__ import binary_search", timeit.default_timer, 1)
     dictionary = Dictionary(getDictMap("./e-c"))
-    print dictionary.search("A")
-    print dictionary.search("zero")
+    while True:
+        s = raw_input()
+        print dictionary.editDistanceTopK(s,4,2)
