@@ -5,6 +5,7 @@ Created on 2014/9/23
 @author: kepler-moment
 '''
 from editDistance import editDistance
+from BK_Tree import BK_Tree
 
 class Node:
     """Used as node of Trie"""
@@ -150,7 +151,13 @@ def getDictMap(path):
 if __name__=='__main__':
     #print timeit.timeit("search('Will')", "from __main__ import search", timeit.default_timer, 1)
     #print timeit.timeit("binary_search('Will')", "from __main__ import binary_search", timeit.default_timer, 1)
-    dictionary = Dictionary(getDictMap("./e-c"))
-    while True:
-        s = raw_input()
-        print dictionary.editDistanceTopK(s,4,2)
+    #dictionary = Dictionary(getDictMap("./e-c"))
+    bk = BK_Tree()
+    bk.insert("656")
+    bk.insert("67")
+    bk.insert("9312")
+    bk.insert("1178")
+    bk.insert("38")
+    print bk.topKSimilar("87", 5, 1)
+    print bk.topKSimilar("6", 5, 3)
+    

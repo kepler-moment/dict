@@ -6,8 +6,8 @@ Created on 2014/9/25/
 
 #get edit distance between str1 and str2
 def editDistance(str1,str2):
-    s1 = '0' + str1
-    s2 = '0' + str2
+    s1 = '0' + str(str1)
+    s2 = '0' + str(str2)
     len1 = len(s1)
     len2 = len(s2)
     dp = [0] * max(len1,len2)
