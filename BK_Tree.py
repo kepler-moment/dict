@@ -52,8 +52,13 @@ class BK_Tree:
         distance = editDistance(root.word,word)
         if distance <= maxDistance:
             s[root.word] = distance
-        j = max(0,distance - maxDistance)
-        for i in range(j,distance + maxDistance + 1):
+        l = max(0,distance - maxDistance)
+        r = min(len(root.children),distance + maxDistance + 1)
+        #print "len: %s" % len(root.children)
+        #print "dis: %s" % distance
+        #print "word: %s" % root.word
+        for i in range(l,r):
+            #print i
             if root.children[i] is not None:
                 tmp = self.__search(word,root.children[i],maxDistance)
                 if tmp is not None:
