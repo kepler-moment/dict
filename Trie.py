@@ -46,7 +46,6 @@ class Trie:
     def insert(self,key,value):
         """insert key => value"""
         lenOfkey = len(key)
-        
         """if there is capital in key,insert it into rootOfCapital"""
 
         if self.hasCapital(key):
@@ -75,7 +74,8 @@ class Trie:
                 root = root.next[tmp]
             root.setWord(value)
                     
-    def search(self,key):  
+    def search(self,key): 
+        assert key != None 
         d = {}
         low_word = key.lower()
         root = self.rootOfLow
@@ -84,7 +84,7 @@ class Trie:
             if root.next[tmp] is None:
                 break
             root = root.next[tmp]
-        if root != None and root.isWord() is True and i == len(key):
+        if root != None and root.isWord() == True and i == len(key) - 1:
             d[low_word] = root.getValue()
         if self.hasCapital(key):
             root = self.rootOfCapital
@@ -96,6 +96,6 @@ class Trie:
                 if root.next[tmp] is None:
                     break
                 root = root.next[tmp]
-            if root != None and root.isWord() is True and i == len(key):
+            if root != None and root.isWord() is True and i == len(key) - 1:
                 d[key] = root.getValue()
         return d
